@@ -72,17 +72,27 @@ h1 {
 
 .checklist li {
     display: flex;
-    align-items: center;
-    margin: 20px 0; /* Increase spacing for larger boxes */
+    align-items: flex-start; /* Align items at the top */
+    margin: 20px 0; /* Space between list items */
 }
 
 .checklist label {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Align items at the top */
     cursor: pointer;
     color: #fff;
-    font-size: 1.2em; /* Increase font size for larger boxes */
+    font-size: 18px;
+    width: 100%;
 }
+
+
+.checklist label span {
+    flex: 1; /* Allow text to take up remaining space */
+    font-size: inherit; /* Inherit font size from label */
+    flex-shrink: 0; /* Prevent text from shrinking */
+    word-break: break-word; /* Break long words if necessary */
+}
+
 
 .checklist input[type="checkbox"] {
     display: none;
@@ -91,6 +101,7 @@ h1 {
 .checklist label::before {
     content: '';
     display: inline-block;
+    flex-shrink: 0; /* Prevent the checkbox from shrinking */
     width: 48px;
     height: 48px;
     background: #fff; /* Default background for unchecked boxes */
@@ -103,7 +114,24 @@ h1 {
     background-repeat: no-repeat;
 }
 
+
 /* Cross out the text when checkbox is checked */
 .checklist input[type="checkbox"]:checked + span {
     text-decoration: line-through;
 }
+
+@media (max-width: 600px) {
+    .checklist label {
+        font-size: 16px; /* Slightly smaller font size on mobile */
+    }
+
+    .checklist label::before {
+        width: 40px;
+        height: 40px;
+    }
+
+    .checklist li {
+        margin: 15px 0;
+    }
+}
+
