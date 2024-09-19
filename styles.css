@@ -1,0 +1,61 @@
+body {
+    background-color: #66bb6a; /* Minecraft grass color */
+    font-family: 'Minecraftia', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    text-align: center;
+}
+h1 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+.checklist {
+    list-style: none;
+    padding: 0;
+}
+.checklist li {
+    margin: 10px 0;
+}
+.checklist input[type="checkbox"] {
+    display: none;
+}
+.checklist label {
+    position: relative;
+    padding-left: 40px;
+    cursor: pointer;
+    color: #fff;
+}
+.checklist label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -5px;
+    width: 32px;
+    height: 32px;
+    background: url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/17/Grass_Block_%28graphics_fast%29_JE3.png/revision/latest?cb=20200831093828') no-repeat center center / cover;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.checklist input[type="checkbox"] + span:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -5px;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+}
+.checklist input[type="checkbox"]:checked + span:before {
+    opacity: 0;
+}
+.checklist input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+    color: #ccc;
+}
+.checklist label:hover:before {
+    opacity: 0.5;
+}
