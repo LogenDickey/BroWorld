@@ -1,15 +1,9 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCJKgYLUWaS4JQxbL9D2eSFoD9rebsV-0w",
-    authDomain: "broworld-database.firebaseapp.com",
-    projectId: "broworld-database",
-    storageBucket: "broworld-database.appspot.com",
-    messagingSenderId: "626286532659",
-    appId: "1:626286532659:web:f85ad79367d291ed152b46"
+    // ... your Firebase config ...
 };
 
 // Initialize Firebase
@@ -17,6 +11,7 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore
 const db = getFirestore(app);
+
 // Array of local image URLs
 const images = [
     'images/Lantern.webp',
@@ -33,11 +28,10 @@ const images = [
     'images/warden.jpg'
 ];
 
-
-// Copy of images array to track unused images
+// Copy of images array to track unused images for checklist
 let unusedImages = [...images];
 
-// Function to generate a random image
+// Function to get a random image for the checklist
 function getRandomImage() {
     // If all images have been used, reset the unusedImages array
     if (unusedImages.length === 0) {
@@ -47,6 +41,12 @@ function getRandomImage() {
     const randomIndex = Math.floor(Math.random() * unusedImages.length);
     const selectedImage = unusedImages.splice(randomIndex, 1)[0];
     return selectedImage;
+}
+
+// Function to get a random image for the moving animation
+function getRandomImageForAnimation() {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
 }
 
 // Initialize the checklist
@@ -83,11 +83,6 @@ function initChecklist() {
         });
     });
 }
-// Function to get a random image from the images array for animation
-function getRandomImageForAnimation() {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    return images[randomIndex];
-}
 
 // Function to initialize moving images
 function initMovingImages() {
@@ -100,29 +95,29 @@ function initMovingImages() {
         img.src = getRandomImageForAnimation();
         img.style.position = 'absolute';
         img.style.top = Math.random() * (containerHeight - 50) + 'px'; // Random vertical position
-        img.style.left = '0'; // Start at the left edge
+        img.style.left = '-50px'; // Start off-screen to the left
         img.style.width = '50px'; // Adjust size as needed
         img.style.height = '50px';
 
-        const duration = 10 + Math.random() * 5; // Duration between 10 and 15 seconds
+        const duration = 20 + Math.random() * 10; // Duration between 20 and 30 seconds
         const delay = Math.random() * 5; // Delay between 0 and 5 seconds
 
         img.style.animationDuration = `${duration}s`;
         img.style.animationDelay = `${delay}s`;
 
         // Remove the image when the animation ends
-        img.addEventListener('animationend', () => {
-            img.remove();
-        });
+        const removeImage = () => img.remove();
+        img.addEventListener('animationend', removeImage);
+        img.addEventListener('webkitAnimationEnd', removeImage);
 
         movingImagesContainer.appendChild(img);
     }
 
     // Create images at intervals
-    setInterval(createMovingImage, 2000); // Adjust interval as needed
+    setInterval(createMovingImage, 5000); // Create a new image every 5 seconds
 }
 
-// Modify the DOMContentLoaded event listener
+// Initialize both checklist and moving images when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initChecklist();
     initMovingImages();
