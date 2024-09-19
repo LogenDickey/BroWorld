@@ -95,31 +95,46 @@ function initMovingImages() {
     const containerHeight = movingImagesContainer.offsetHeight;
 
     // Function to create a moving image
-    function createMovingImage() {
-        const img = document.createElement('img');
-        img.src = getRandomImageForAnimation();
-        img.style.position = 'absolute';
-        img.style.top = Math.random() * (containerHeight - 50) + 'px'; // Random vertical position
-        img.style.left = '-50px'; // Start off-screen to the left
-        img.style.width = '50px'; // Adjust size as needed
-        img.style.height = '50px';
+function createMovingImage() {
+    const img = document.createElement('img');
+    img.src = getRandomImageForAnimation();
+    img.style.position = 'absolute';
 
-        const duration = 20 + Math.random() * 10; // Duration between 20 and 30 seconds
-        const delay = Math.random() * 5; // Delay between 0 and 5 seconds
+    img.style.width = '60px'; // Adjust size as needed
+    img.style.height = 'auto'; // Maintain aspect ratio
 
-        img.style.animationDuration = `${duration}s`;
-        img.style.animationDelay = `${delay}s`;
+    img.style.left = '-60px'; // Start off-screen to the left
 
-        // Remove the image when the animation ends
-        const removeImage = () => img.remove();
-        img.addEventListener('animationend', removeImage);
-        img.addEventListener('webkitAnimationEnd', removeImage);
+    // Wait until the image has loaded to get its height
+    img.onload = () => {
+        const imgHeight = img.height;
+        const containerHeight = movingImagesContainer.offsetHeight;
+        const maxTop = containerHeight - imgHeight;
 
-        movingImagesContainer.appendChild(img);
-    }
+        // Ensure maxTop is not negative
+        const validMaxTop = Math.max(0, maxTop);
+
+        const topPosition = Math.random() * validMaxTop;
+        img.style.top = `${topPosition}px`;
+    };
+
+    const duration = 17 + Math.random() * 13; // Duration between 17 and 30 seconds
+    const delay = Math.random() * 5; // Delay between 0 and 5 seconds
+
+    img.style.animationDuration = `${duration}s`;
+    img.style.animationDelay = `${delay}s`;
+
+    // Remove the image when the animation ends
+    const removeImage = () => img.remove();
+    img.addEventListener('animationend', removeImage);
+    img.addEventListener('webkitAnimationEnd', removeImage);
+
+    movingImagesContainer.appendChild(img);
+}
 
     // Create images at intervals
-    setInterval(createMovingImage, 5000); // Create a new image every 5 seconds
+    setInterval(createMovingImage, 4000); // Reduced interval to 4 seconds
+
 }
 
 // Initialize both checklist and moving images when DOM is loaded
