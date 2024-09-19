@@ -11,6 +11,16 @@ body {
     text-align: center;
 }
 
+.title-image {
+    text-align: center;
+    margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+.title-image img {
+    max-width: 80%; /* Adjust size as needed */
+    height: auto;
+}
+
 h1 {
     color: #fff;
     margin-bottom: 20px;
