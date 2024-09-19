@@ -20,42 +20,25 @@ h1 {
 .checklist li {
     margin: 10px 0;
 }
-.checklist input[type="checkbox"] {
-    display: none;
-}
 .checklist label {
     position: relative;
-    padding-left: 40px;
+    padding-left: 10px;
     cursor: pointer;
     color: #fff;
+    display: flex;
+    align-items: center;
 }
-.checklist label:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: -5px;
+.checklist input[type="checkbox"] {
+    margin-right: 10px;
+}
+.checklist span {
+    margin-right: 10px;
+}
+.checklist .item-image {
     width: 32px;
     height: 32px;
-    background: url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/17/Grass_Block_%28graphics_fast%29_JE3.png/revision/latest?cb=20200831093828') no-repeat center center / cover;
-    opacity: 0;
-    transition: opacity 0.2s;
+    display: none;
 }
-.checklist input[type="checkbox"] + span:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: -5px;
-    width: 32px;
-    height: 32px;
-    background: #fff;
-}
-.checklist input[type="checkbox"]:checked + span:before {
-    opacity: 0;
-}
-.checklist input[type="checkbox"]:checked + span {
-    text-decoration: line-through;
-    color: #ccc;
-}
-.checklist label:hover:before {
-    opacity: 0.5;
+.checklist input[type="checkbox"]:checked + span + .item-image {
+    display: inline-block;
 }
