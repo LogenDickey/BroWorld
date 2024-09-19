@@ -50,8 +50,11 @@ body {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center child elements horizontally */
     text-align: center;
-    width: 100%; /* Ensure full width */
+    width: 100%;
 }
 
 h1 {
@@ -62,14 +65,16 @@ h1 {
 .checklist {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .checklist li {
+    display: flex;
+    align-items: center;
     margin: 20px 0; /* Increase spacing for larger boxes */
 }
 
 .checklist label {
-    position: relative;
     display: flex;
     align-items: center;
     cursor: pointer;
