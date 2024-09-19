@@ -1,3 +1,6 @@
+// Import Firebase modules (make sure to include these at the top)
+const app = firebase.app();
+const db = firebase.firestore();
 // Array of image URLs// Updated array of image URLs
 const images = [
     'https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/17/Grass_Block_%28graphics_fast%29_JE3.png/revision/latest?cb=20200831093828',
@@ -16,32 +19,82 @@ const images = [
 // Copy of images array to track unused images
 let unusedImages = [...images];
 
-document.querySelectorAll('.checklist input[type="checkbox"]').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-        const label = this.parentElement;
-        const span = label.querySelector('span');
-        if (this.checked) {
-            // If all images have been used, reset the unusedImages array
-            if (unusedImages.length === 0) {
-                unusedImages = [...images];
-            }
-            // Select a random image and remove it from unusedImages
-            const randomIndex = Math.floor(Math.random() * unusedImages.length);
-            const selectedImage = unusedImages.splice(randomIndex, 1)[0];
+// Inside initChecklist function, replace the fetch code with real-time listener
+document.querySelectorAll('.checklist input[type="checkbox"]').forEach((checkbox, index) => {
+    const label = checkbox.parentElement;
+    const taskId = `task${index}`; // Unique ID for each task
 
-            // Set the background image of the ::before pseudo-element
-            label.style.setProperty('--bg-image', `url(${selectedImage})`);
-        } else {
-            // If unchecked, remove the background image and add it back to unusedImages
-            const bgImage = label.style.getPropertyValue('--bg-image');
-            if (bgImage) {
-                // Extract URL from CSS variable
-                const urlMatch = bgImage.match(/url\("?(.*?)"?\)/);
-                if (urlMatch && urlMatch[1]) {
-                    unusedImages.push(urlMatch[1]);
-                }
+    // Real-time listener for task state
+    checklistRef.doc(taskId).onSnapshot(doc => {
+        if (doc.exists) {
+            const data = doc.data();
+            checkbox.checked = data.checked || false;
+            if (checkbox.checked) {
+                label.style.setProperty('--bg-image', `url(${getRandomImage()})`);
+                // Apply line-through style
+                label.querySelector('span').style.textDecoration = 'line-through';
+            } else {
+                label.style.setProperty('--bg-image', '');
+                // Remove line-through style
+                label.querySelector('span').style.textDecoration = 'none';
             }
-            label.style.setProperty('--bg-image', '');
         }
     });
+
+    // Add event listener to update Firestore on change
+    checkbox.addEventListener('change', function() {
+        // Update Firestore with the new state
+        checklistRef.doc(taskId).set({
+            checked: this.checked
+        });
+    });
 });
+
+// Reference to the Firestore collection
+const checklistRef = db.collection('checklist');
+
+// Initialize the checklist
+function initChecklist() {
+    document.querySelectorAll('.checklist input[type="checkbox"]').forEach((checkbox, index) => {
+        const label = checkbox.parentElement;
+        const taskId = `task${index}`; // Unique ID for each task
+
+        // Fetch the task state from Firestore
+        checklistRef.doc(taskId).get().then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                checkbox.checked = data.checked || false;
+                if (checkbox.checked) {
+                    label.style.setProperty('--bg-image', `url(${getRandomImage()})`);
+                    // Apply line-through style
+                    label.querySelector('span').style.textDecoration = 'line-through';
+                }
+            }
+        });
+
+        // Add event listener to update Firestore on change
+        checkbox.addEventListener('change', function() {
+            const span = label.querySelector('span');
+            if (this.checked) {
+                // Get a random image
+                const selectedImage = getRandomImage();
+                // Set the background image of the ::before pseudo-element
+                label.style.setProperty('--bg-image', `url(${selectedImage})`);
+                // Apply line-through style
+                span.style.textDecoration = 'line-through';
+            } else {
+                // Remove the background image
+                label.style.setProperty('--bg-image', '');
+                // Remove line-through style
+                span.style.textDecoration = 'none';
+            }
+            // Update Firestore with the new state
+            checklistRef.doc(taskId).set({
+                checked: this.checked
+            });
+        });
+    });
+}
+
+// Call the initialization function when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', initChecklist);
