@@ -40,34 +40,20 @@ h1 {
 
 .checklist label::before {
     content: '';
+    display: inline-block;
     width: 48px;
     height: 48px;
     background: #fff; /* Default background for unchecked boxes */
     margin-right: 15px;
     border: 2px solid #000;
     box-sizing: border-box;
-}
-
-.checklist input[type="checkbox"]:checked + span::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 48px;
-    height: 48px;
+    background-image: var(--bg-image);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-right: 15px;
-    border: 2px solid #000;
-    box-sizing: border-box;
-    background-image: var(--bg-image);
 }
 
-.checklist input[type="checkbox"]:not(:checked) + span::before {
-    background-image: none;
-}
-
-.checklist span {
-    position: relative;
-    padding-left: 15px; /* Adjust for larger checkbox */
+/* Cross out the text when checkbox is checked */
+.checklist input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
 }
