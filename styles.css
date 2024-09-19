@@ -2,23 +2,24 @@ body {
     background-color: #66bb6a; /* Minecraft grass color */
     font-family: 'Minecraftia', sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch; /* Changed from center to stretch */
     min-height: 100vh;
-}
-
-.container {
-    text-align: center;
+    margin: 0;
 }
 
 .title-image {
     text-align: center;
-    margin-bottom: 20px; /* Adjust spacing as needed */
+    margin-top: 20px; /* Space at the top */
+    margin-bottom: 20px; /* Space between title and moving images */
+    width: 100%; /* Ensure full width */
 }
 
 .title-image img {
     max-width: 80%; /* Adjust size as needed */
     height: auto;
+    display: block;
+    margin: 0 auto; /* Center the image */
 }
 
 .moving-images {
@@ -36,15 +37,21 @@ body {
     animation-name: moveRight;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
+    pointer-events: none; /* Prevent mouse events */
 }
 
 @keyframes moveRight {
     from {
-        transform: translateX(-100%);
+        left: -50px; /* Start off-screen to the left */
     }
     to {
-        transform: translateX(200%);
+        left: calc(100% + 50px); /* Move off-screen to the right */
     }
+}
+
+.container {
+    text-align: center;
+    width: 100%; /* Ensure full width */
 }
 
 h1 {
