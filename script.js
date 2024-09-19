@@ -13,7 +13,8 @@ let unusedImages = [...images];
 
 document.querySelectorAll('.checklist input[type="checkbox"]').forEach(checkbox => {
     checkbox.addEventListener('change', function() {
-        const span = this.parentElement.querySelector('span');
+        const label = this.parentElement;
+        const span = label.querySelector('span');
         if (this.checked) {
             // If all images have been used, reset the unusedImages array
             if (unusedImages.length === 0) {
@@ -24,10 +25,10 @@ document.querySelectorAll('.checklist input[type="checkbox"]').forEach(checkbox 
             const selectedImage = unusedImages.splice(randomIndex, 1)[0];
 
             // Set the background image of the ::before pseudo-element
-            span.style.setProperty('--bg-image', `url(${selectedImage})`);
+            label.style.setProperty('--bg-image', `url(${selectedImage})`);
         } else {
             // If unchecked, remove the background image and add it back to unusedImages
-            const bgImage = span.style.getPropertyValue('--bg-image');
+            const bgImage = label.style.getPropertyValue('--bg-image');
             if (bgImage) {
                 // Extract URL from CSS variable
                 const urlMatch = bgImage.match(/url\("?(.*?)"?\)/);
@@ -35,7 +36,7 @@ document.querySelectorAll('.checklist input[type="checkbox"]').forEach(checkbox 
                     unusedImages.push(urlMatch[1]);
                 }
             }
-            span.style.setProperty('--bg-image', '');
+            label.style.setProperty('--bg-image', '');
         }
     });
 });
