@@ -6,7 +6,7 @@ body {
     align-items: stretch; /* Changed from center to stretch */
     min-height: 100vh;
     margin: 0;
-}
+} 
 
 .title-image {
     text-align: center;
