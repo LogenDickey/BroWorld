@@ -30,8 +30,47 @@ const images = [
     'images/enderpearl.png',
     'images/grassblock.png',
     'images/netheritesword.png',
-    'images/warden.jpg'
+    'images/warden.jpg',
+    // New images you've added
+    'images/wither_skeleton_skull.png',
+    'images/yellow_bed.png',
+    'images/zombie_head.png',
+    'images/water_bucket.png',
+    'images/weeping_vines.png',
+    'images/tropical_fish.png',
+    'images/trident.png',
+    'images/spyglass.png',
+    'images/totem_of_undying.png',
+    'images/tnt.png',
+    'images/waxed_cut_copper.png',
+    'images/target.png',
+    'images/slime_block.png',
+    'images/string.png',
+    'images/spawner.png',
+    'images/red_mushroom.png',
+    'images/porkchop.png',
+    'images/recovery_compass.png',
+    'images/ominous_trial_key.png',
+    'images/netherite_ingot.png',
+    'images/nether_star.png',
+    'images/music_disc_pigstep.png',
+    'images/netherite_upgrade_smithing_template.png',
+    'images/mace.png',
+    'images/magenta_concrete_powder.png',
+    'images/magma_cream.png',
+    'images/feather.png',
+    'images/hay_block.png',
+    'images/glass.png',
+    'images/deepslate_emerald_ore.png',
+    'images/cobweb.png',
+    'images/carved_pumpkin.png',
+    'images/axolotl_bucket.png',
+    'images/beacon.png',
+    'images/ancient_debris.png',
+    'images/blue_orchid.png',
+    'images/bookshelf.png'
 ];
+
 
 // Copy of images array to track unused images for checklist
 let unusedImages = [...images];
