@@ -54,9 +54,10 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center child elements horizontally */
+    align-items: center; /* Center the checklist */
     text-align: center;
     width: 100%;
+    padding: 0 20px; /* Add horizontal padding */
 }
 
 h1 {
@@ -120,9 +121,15 @@ h1 {
     text-decoration: line-through;
 }
 
+
+/* Mobile adjustments */
 @media (max-width: 600px) {
+    .container {
+        padding: 0 10px; /* Increase padding on mobile */
+    }
+
     .checklist label {
-        font-size: 16px; /* Slightly smaller font size on mobile */
+        font-size: 16px;
     }
 
     .checklist label::before {
@@ -134,4 +141,3 @@ h1 {
         margin: 15px 0;
     }
 }
-
