@@ -83,6 +83,47 @@ function initChecklist() {
         });
     });
 }
+// Function to get a random image from the images array for animation
+function getRandomImageForAnimation() {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+}
 
-// Call the initialization function when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', initChecklist);
+// Function to initialize moving images
+function initMovingImages() {
+    const movingImagesContainer = document.querySelector('.moving-images');
+    const containerHeight = movingImagesContainer.offsetHeight;
+
+    // Function to create a moving image
+    function createMovingImage() {
+        const img = document.createElement('img');
+        img.src = getRandomImageForAnimation();
+        img.style.position = 'absolute';
+        img.style.top = Math.random() * (containerHeight - 50) + 'px'; // Random vertical position
+        img.style.left = '0'; // Start at the left edge
+        img.style.width = '50px'; // Adjust size as needed
+        img.style.height = '50px';
+
+        const duration = 10 + Math.random() * 5; // Duration between 10 and 15 seconds
+        const delay = Math.random() * 5; // Delay between 0 and 5 seconds
+
+        img.style.animationDuration = `${duration}s`;
+        img.style.animationDelay = `${delay}s`;
+
+        // Remove the image when the animation ends
+        img.addEventListener('animationend', () => {
+            img.remove();
+        });
+
+        movingImagesContainer.appendChild(img);
+    }
+
+    // Create images at intervals
+    setInterval(createMovingImage, 2000); // Adjust interval as needed
+}
+
+// Modify the DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
+    initChecklist();
+    initMovingImages();
+});
