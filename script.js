@@ -3,7 +3,12 @@ import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/f
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    // ... your Firebase config ...
+    apiKey: "AIzaSyCJKgYLUWaS4JQxbL9D2eSFoD9rebsV-0w",
+    authDomain: "broworld-database.firebaseapp.com",
+    projectId: "broworld-database",
+    storageBucket: "broworld-database.appspot.com",
+    messagingSenderId: "626286532659",
+    appId: "1:626286532659:web:f85ad79367d291ed152b46"
 };
 
 // Initialize Firebase
